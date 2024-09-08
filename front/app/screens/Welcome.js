@@ -12,7 +12,7 @@ function Welcome({ navigation }) {
                 <Text style={styles.eia_title}>EIA</Text>
             </View>
             <Image source={require('../assets/logo eia.png')} style={styles.logo_eia}/>
-            <Button title="Iniciar" onPress={() => alert} />
+            <Button title="Iniciar" onPress={() => navigation.navigate('Login')} />
         </SafeAreaView>
     );
 }
