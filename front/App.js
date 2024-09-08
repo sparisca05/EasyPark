@@ -1,20 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import Button from './components/Button';
+import { 
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.logo_title}>EasyPark</Text>
+        <Text style={styles.eia_title}>EIA</Text>
+      </View>
+      <Image source={require('./assets/logo eia.png')} style={styles.logo_eia}/>
+      <Button title="Iniciar" onPress={() => alert('Iniciar')} />
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+  },
+  logo_title: {
+    fontSize: 64,
+    fontWeight: '500',
+    color: '#023F81'
+  },
+  eia_title: {
+    fontSize: 64,
+    fontWeight: '500',
+    color: '#5AC8FA',
+    textAlign: 'center'
+  },
+  logo_eia: {
+    width: 350,
+    height: 180,
   },
 });
