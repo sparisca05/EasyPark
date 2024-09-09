@@ -7,19 +7,12 @@ const KeyboardAvoidingWrapper = ({children}) => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{flex: 1}}
         >
-            <ScrollView contentContainerStyle={styles.scrollview}>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    {children}
-                </TouchableWithoutFeedback>
-            </ScrollView>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                {children}
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 }
 
-const styles = StyleSheet.create({
-    scrollview: {
-        flex: 1,
-    },
-});
 
 export default KeyboardAvoidingWrapper;

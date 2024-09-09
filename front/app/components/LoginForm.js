@@ -79,11 +79,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'flex-start',
-
     },
     form_container: {
         width: '100%',
         padding: 30,
+        backgroundColor: '#fff',
     },
     title: {
         fontSize: 20,

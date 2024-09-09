@@ -7,7 +7,7 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 function Login({ navigation }) {
     return (
-        <SafeAreaView style={[GlobalStyles.container]}>
+        <SafeAreaView style={GlobalStyles.container}>
             <KeyboardAvoidingWrapper>
                 <View style={{flex: 1}}>
                     <View style={styles.container}>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 
-const HomeButton = ({ text, onPress,icon }) => {
+import GlobalStyles from '../config/GlobalStyles';
+
+const HomeButton = ({ text, onPress, icon }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -28,13 +30,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: '#000000',
+    color: GlobalStyles.dark,
     marginBottom: 10,
     fontWeight : 'bold',
+    textAlign: 'center',
   },
   icon: {
-    width: 60,
-    height: 40,
+    height: 50,
     resizeMode: 'contain',
   },
 });
