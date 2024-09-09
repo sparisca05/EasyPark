@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { SafeAreaView, View, StyleSheet, Alert, Text } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
-import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
-function Login({ navigation }) {
+function Register({navigation}) {
     return (
         <SafeAreaView style={GlobalStyles.container}>
             <KeyboardAvoidingWrapper>
@@ -13,7 +13,7 @@ function Login({ navigation }) {
                     <View style={styles.container}>
                         <Text style={styles.logo_title}>EasyPark</Text>
                     </View>
-                    <LoginForm navigation={navigation} />
+                    <RegisterForm navigation={navigation} />
                 </View>
             </KeyboardAvoidingWrapper>
         </SafeAreaView>
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login;
+export default Register;

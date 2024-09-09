@@ -7,16 +7,17 @@ import CustomButton from '../components/CustomButton';
 function Welcome({ navigation }) {
   
     return (
-        <SafeAreaView style={GlobalStyles.container}>
-            <View style={styles.container}>
-              <View>
-                  <Text style={styles.logo_title}>EasyPark</Text>
-                  <Text style={styles.eia_title}>EIA</Text>
-              </View>
-              <Image source={require('../assets/logo eia.png')} style={styles.logo_eia}/>
-              <CustomButton title="Iniciar" onPress={() => navigation.navigate('Login')} />
+      <SafeAreaView style={GlobalStyles.container}>
+        <StatusBar barStyle={'dark-content'} />
+          <View style={styles.container}>
+            <View>
+                <Text style={styles.logo_title}>EasyPark</Text>
+                <Text style={styles.eia_title}>EIA</Text>
             </View>
-        </SafeAreaView>
+            <Image source={require('../assets/logo eia.png')} style={styles.logo_eia}/>
+            <CustomButton title="Iniciar" onPress={() => navigation.navigate('Login')} />
+          </View>
+      </SafeAreaView>
     );
 }
 

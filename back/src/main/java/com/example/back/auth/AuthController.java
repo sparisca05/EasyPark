@@ -16,9 +16,9 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping()
+    @GetMapping(value = "login")
     public ResponseEntity<String> get() {
-        return ResponseEntity.ok("GET: Auth");
+        return ResponseEntity.ok("GET: Login");
     }
 
     @PostMapping(value = "login")

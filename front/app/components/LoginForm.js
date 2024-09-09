@@ -1,28 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
+import axios from 'axios';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
-import colors from '../config/GlobalStyles';
 
 const LoginForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        // Verifica si los campos están vacíos
-        if (username === '' || password === '') {
-          Alert.alert('Error', 'Por favor, completa todos los campos.');
-          return;
-        }
-        // Aquí puedes agregar la lógica de autenticación o hacer una petición HTTP al backend
-        if (username === 'admin' && password === '1234') {
-            Alert.alert('Éxito', 'Inicio de sesión exitoso');
-            // Redirigir a la pantalla de inicio u otra pantalla
-            navigation.navigate('Welcome');
-        } else {
-            Alert.alert('Error', 'Usuario o contraseña incorrectos');
-        }
+    const handleLogin = (credentials) => {
+        useEffect(() => {
+            fetch('http://localhost:8080/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials),
+            })
+            .then(response => response.json())
+            .then((username, password )=> {
+                 // Verifica si los campos están vacíos
+                if (username === '' || password === '') {
+                    Alert.alert('Error', 'Por favor, completa todos los campos.');
+                    return;
+                }
+                // Aquí puedes agregar la lógica de autenticación o hacer una petición HTTP al backend
+                if (username === 'admin' && password === '1234') {
+                    Alert.alert('Éxito', 'Inicio de sesión exitoso');
+                    
+                } else {
+                    Alert.alert('Error', 'Usuario o contraseña incorrectos');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }, []);
+
+        axios
+        .post(url, credentials)
+        .then(() => {
+           
+        })
+        .catch(error => {
+            console.log('Hubo un error', error);
+        });
     };
 
     return (
@@ -45,14 +68,21 @@ const LoginForm = ({ navigation }) => {
                     secureTextEntry={true} // Oculta el texto de la contraseña
                 />
             </View>
-            <CustomButton title="Ingresar" onPress={() => navigation.navigate('Login')} />
+            <CustomButton title="Ingresar" onPress={() => {
+                handleLogin(),
+                navigation.navigate('Login')
+                }} 
+            />
             <View style={styles.other}>
                 <TouchableOpacity>
-                    <Text style={styles.text}>¿Olvidaste tu contraseña?</Text>
+                    <Text style={[styles.text, {color: 'cornflowerblue',}]}>¿Olvidaste tu contraseña?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={[styles.text, {color: 'cornflowerblue'}]}>Regístrate</Text>
-                </TouchableOpacity>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text style={styles.text}>¿No tienes cuenta?  </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                        <Text style={[styles.text, {color: 'cornflowerblue',}]}>Regístrate</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -64,7 +94,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'flex-start',
-        paddingVertical: 30,
+
     },
     form_container: {
         width: '100%',
