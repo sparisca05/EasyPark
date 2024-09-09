@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
@@ -10,38 +10,23 @@ const LoginForm = ({ navigation }) => {
     const [password, setPassword] = useState('');
 
     const handleLogin = (credentials) => {
-        useEffect(() => {
-            fetch('http://localhost:8080/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(credentials),
-            })
-            .then(response => response.json())
-            .then((username, password )=> {
-                 // Verifica si los campos están vacíos
-                if (username === '' || password === '') {
-                    Alert.alert('Error', 'Por favor, completa todos los campos.');
-                    return;
-                }
-                // Aquí puedes agregar la lógica de autenticación o hacer una petición HTTP al backend
-                if (username === 'admin' && password === '1234') {
-                    Alert.alert('Éxito', 'Inicio de sesión exitoso');
-                    
-                } else {
-                    Alert.alert('Error', 'Usuario o contraseña incorrectos');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }, []);
+        const url = 'http://localhost:8080/auth/login';
 
         axios
         .post(url, credentials)
         .then(() => {
-           
+            // Verifica si los campos están vacíos
+        if (username === '' || password === '') {
+            Alert.alert('Error', 'Por favor, completa todos los campos.');
+            return;
+          }
+          // Aquí puedes agregar la lógica de autenticación o hacer una petición HTTP al backend
+          if (username === 'admin' && password === '1234') {
+              Alert.alert('Éxito', 'Inicio de sesión exitoso');
+              
+          } else {
+              Alert.alert('Error', 'Usuario o contraseña incorrectos');
+          }
         })
         .catch(error => {
             console.log('Hubo un error', error);
