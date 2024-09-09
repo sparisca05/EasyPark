@@ -22,6 +22,7 @@ function Login({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: -100,
         flex: 1,
         width: '100%',
         alignItems: 'center',
