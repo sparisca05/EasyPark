@@ -54,8 +54,8 @@ const LoginForm = ({ navigation }) => {
                 />
             </View>
             <CustomButton title="Ingresar" onPress={() => {
-                handleLogin(),
-                navigation.navigate('Login')
+                /*handleLogin(),*/
+                navigation.navigate('Home')
                 }} 
             />
             <View style={styles.other}>

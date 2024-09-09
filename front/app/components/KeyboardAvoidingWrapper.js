@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard, S
 const KeyboardAvoidingWrapper = ({children}) => {
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}  // Usar "padding" para iOS
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{flex: 1}}
         >
             <ScrollView contentContainerStyle={styles.scrollview}>
