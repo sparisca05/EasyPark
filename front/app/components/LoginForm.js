@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
+import { MaterialIcons, Octicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 import GlobalStyles from '../config/GlobalStyles';
@@ -8,6 +9,7 @@ import CustomButton from './CustomButton';
 const LoginForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [hidePassword, setHidePassword] = useState(true);
 
     const handleLogin = (credentials) => {
         const url = 'http://localhost:8080/auth/login';
@@ -37,21 +39,25 @@ const LoginForm = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.form_container}>
                 <Text style={styles.title}>Introduce tu correo electrónico</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Correo electrónico"
-                    value={username}
-                    onChangeText={setUsername} // Actualiza el estado
-                    autoCapitalize="none"
-                />
+                <View style={styles.input}>
+                    <TextInput
+                        placeholder="Correo electrónico"
+                        value={username}
+                        onChangeText={setUsername} // Actualiza el estado
+                        autoCapitalize="none"
+                    />
+                    <MaterialIcons name='email' size={24}/>
+                </View>
                 <Text style={styles.title}>Introduce tu contraseña</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Contraseña"
                     value={password}
                     onChangeText={setPassword} // Actualiza el estado
-                    secureTextEntry={true} // Oculta el texto de la contraseña
-                />
+                    secureTextEntry={hidePassword} // Oculta el texto de la contraseña
+                >
+                    
+                </TextInput>
             </View>
             <CustomButton title="Ingresar" onPress={() => {
                 /*handleLogin(),*/
@@ -91,6 +97,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     input: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         height: 40,
         width: '100%',
         backgroundColor: GlobalStyles.light,
