@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Alert, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
-import Button from './Button';
+import CustomButton from './CustomButton';
+import colors from '../config/GlobalStyles';
 
 const LoginForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -44,7 +45,15 @@ const LoginForm = ({ navigation }) => {
                     secureTextEntry={true} // Oculta el texto de la contraseña
                 />
             </View>
-            <Button title="Ingresar" onPress={() => navigation.navigate('Login')} />
+            <CustomButton title="Ingresar" onPress={() => navigation.navigate('Login')} />
+            <View style={styles.other}>
+                <TouchableOpacity>
+                    <Text style={styles.text}>¿Olvidaste tu contraseña?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.text, {color: 'cornflowerblue'}]}>Regístrate</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -53,12 +62,13 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'flex-start',
+        paddingVertical: 30,
     },
     form_container: {
         width: '100%',
-        padding: 20,
+        padding: 30,
     },
     title: {
         fontSize: 20,
@@ -70,8 +80,18 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: GlobalStyles.light,
         marginBottom: 20,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         borderRadius: 25,
+    },
+    other: {
+        width: '100%',
+        padding: 30,
+        marginBottom: 10,
+    },
+    text: {
+        fontSize: 18,
+        paddingVertical: 5,
+        textAlign: 'center',
     },
 });
 

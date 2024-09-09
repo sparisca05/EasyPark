@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, View, Text, Image, StyleSheet, StatusBar, Platform } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
-import Button from '../components/Button';
+import CustomButton from '../components/CustomButton';
 
 function Welcome({ navigation }) {
   
@@ -14,7 +14,7 @@ function Welcome({ navigation }) {
                   <Text style={styles.eia_title}>EIA</Text>
               </View>
               <Image source={require('../assets/logo eia.png')} style={styles.logo_eia}/>
-              <Button title="Iniciar" onPress={() => navigation.navigate('Login')} />
+              <CustomButton title="Iniciar" onPress={() => navigation.navigate('Login')} />
             </View>
         </SafeAreaView>
     );

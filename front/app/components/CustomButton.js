@@ -15,7 +15,7 @@ const Button = ({ title, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 30,
     width: '100%',
   },
   button: {

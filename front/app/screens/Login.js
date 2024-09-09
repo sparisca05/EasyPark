@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { SafeAreaView, View, TextInput, Button, StyleSheet, Alert, Text } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Alert, Text } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
 import LoginForm from '../components/LoginForm';
