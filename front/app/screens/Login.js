@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { SafeAreaView, View, StyleSheet, Alert, Text } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Alert, Text, Image } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
 import LoginForm from '../components/LoginForm';
@@ -11,7 +11,7 @@ function Login({ navigation }) {
             <KeyboardAvoidingWrapper>
                 <View style={{flex: 1}}>
                     <View style={styles.container}>
-                        <Text style={styles.logo_title}>EasyPark</Text>
+                        <Image source={require('../assets/Login.png')} style={styles.logo_eia}/>
                     </View>
                     <LoginForm navigation={navigation} />
                 </View>
@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    logo_eia: {
+        margin: 50,
+        width: 800,
+        height: 400,
+        resizeMode: 'contain',
+        transform: [{ scale: 0.7 }],
+      },
 });
 
 export default Login;
