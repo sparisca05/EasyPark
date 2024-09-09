@@ -7,7 +7,7 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 function Login({ navigation }) {
     return (
-        <SafeAreaView style={[GlobalStyles.container, {justifyContent: 'space-between'}]}>
+        <SafeAreaView style={[GlobalStyles.container]}>
             <KeyboardAvoidingWrapper>
                 <View style={{flex: 1}}>
                     <View style={styles.container}>
@@ -22,7 +22,6 @@ function Login({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: -100,
         flex: 1,
         width: '100%',
         alignItems: 'center',
