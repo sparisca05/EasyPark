@@ -10,9 +10,6 @@ function Register({navigation}) {
         <SafeAreaView style={GlobalStyles.container}>
             <KeyboardAvoidingWrapper>
                 <View style={{flex: 1}}>
-                    <View style={styles.container}>
-                        <Text style={styles.logo_title}>EasyPark</Text>
-                    </View>
                     <RegisterForm navigation={navigation} />
                 </View>
             </KeyboardAvoidingWrapper>
