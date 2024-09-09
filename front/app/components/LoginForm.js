@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
-import { MaterialIcons, Octicons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 
 import GlobalStyles from '../config/GlobalStyles';
@@ -41,6 +41,7 @@ const LoginForm = ({ navigation }) => {
                 <Text style={styles.title}>Introduce tu correo electrónico</Text>
                 <View style={styles.input}>
                     <TextInput
+                        style={{width: '90%'}}
                         placeholder="Correo electrónico"
                         value={username}
                         onChangeText={setUsername} // Actualiza el estado
@@ -49,15 +50,16 @@ const LoginForm = ({ navigation }) => {
                     <MaterialIcons name='email' size={24}/>
                 </View>
                 <Text style={styles.title}>Introduce tu contraseña</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Contraseña"
-                    value={password}
-                    onChangeText={setPassword} // Actualiza el estado
-                    secureTextEntry={hidePassword} // Oculta el texto de la contraseña
-                >
-                    
-                </TextInput>
+                <View style={styles.input}>
+                    <TextInput
+                        style={{width: '90%'}}
+                        placeholder="Contraseña"
+                        value={password}
+                        onChangeText={setPassword} // Actualiza el estado
+                        secureTextEntry={hidePassword} // Oculta el texto de la contraseña con el candado
+                    />
+                    <FontAwesome onPress={() => setHidePassword(!hidePassword)} name={hidePassword ? 'lock' : 'unlock'} size={24}/>
+                </View>
             </View>
             <CustomButton title="Ingresar" onPress={() => {
                 /*handleLogin(),*/
