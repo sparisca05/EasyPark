@@ -1,0 +1,15 @@
+import { StyleSheet, Platform, StatusBar } from 'react-native';
+
+
+const GlobalStyles = StyleSheet.create({
+    primary: "#63AEB1",
+    dark: '#023F81',
+    light: '#C8EDFD',
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
+});
+
+export default GlobalStyles;
