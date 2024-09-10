@@ -11,28 +11,44 @@ const LoginForm = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
 
-    const handleLogin = (credentials) => {
+    const handleLogin = async () => {
+
+        const credentials = { username, password };
         const url = 'http://localhost:8080/auth/login';
 
-        axios
-        .post(url, credentials)
-        .then(() => {
-            // Verifica si los campos están vacíos
         if (username === '' || password === '') {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
             return;
-          }
-          // Aquí puedes agregar la lógica de autenticación o hacer una petición HTTP al backend
-          if (username === 'admin' && password === '1234') {
-              Alert.alert('Éxito', 'Inicio de sesión exitoso');
-              
-          } else {
-              Alert.alert('Error', 'Usuario o contraseña incorrectos');
-          }
-        })
-        .catch(error => {
-            console.log('Hubo un error', error);
-        });
+        }
+
+        try {
+            const response = await axios.post(url, credentials);
+            const token = response.data.token;
+
+            if (token) {
+                Alert.alert('Éxito', 'Inicio de sesion exitoso');
+                //AsyncStorage.setItem('token', token);
+
+                navigation.navigate('Home');
+            } else {
+                Alert.alert('Error', 'Usuario o contraseña malos');
+            }
+        } catch (error) {
+            console.log('Error capturado:', error);
+            if (error.response) {
+                // Error de respuesta del servidor
+                console.log('Error de respuesta:', error.response.data);
+                Alert.alert('Error', 'Problema con la autenticación');
+            } else if (error.request) {
+                // La solicitud fue enviada pero no hubo respuesta
+                console.log('Error de solicitud:', error.request);
+                Alert.alert('Error', 'No se pudo conectar al servidor');
+            } else {
+                // Error al configurar la solicitud
+                console.log('Error en la configuración:', error.message);
+                Alert.alert('Error', 'Error al configurar la solicitud');
+            }
+        }
     };
 
     return (
@@ -61,10 +77,7 @@ const LoginForm = ({ navigation }) => {
                     <FontAwesome onPress={() => setHidePassword(!hidePassword)} name={hidePassword ? 'lock' : 'unlock'} size={24}/>
                 </View>
             </View>
-            <CustomButton title="Ingresar" onPress={() => {
-                handleLogin(),
-                navigation.navigate('Home')
-                }} 
+            <CustomButton title="Ingresar" onPress={handleLogin}
             />
             <View style={styles.other}>
                 <TouchableOpacity>
