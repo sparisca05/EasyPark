@@ -62,7 +62,7 @@ const LoginForm = ({ navigation }) => {
                 </View>
             </View>
             <CustomButton title="Ingresar" onPress={() => {
-                /*handleLogin(),*/
+                handleLogin(),
                 navigation.navigate('Home')
                 }} 
             />
