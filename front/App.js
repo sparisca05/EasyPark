@@ -1,31 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
-import Welcome from './app/screens/Welcome';
-import Login from './app/screens/Login';
-import Register from './app/screens/Register';
-import Home from './app/screens/Home';
-
-const Stack = createNativeStackNavigator();
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import Button from './components/Button';
+import { 
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 
 export default function App() {
 
   return (
-    //<Welcome />
-    
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }}/>
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
-          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
-
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.logo_title}>EasyPark</Text>
+        <Text style={styles.eia_title}>EIA</Text>
+      </View>
+      <Image source={require('./assets/logo eia.png')} style={styles.logo_eia}/>
+      <Button title="Iniciar" onPress={() => alert('Iniciar')} />
+      <StatusBar style="auto" />
+    </SafeAreaView>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  logo_title: {
+    fontSize: 64,
+    fontWeight: '500',
+    color: '#023F81'
+  },
+  eia_title: {
+    fontSize: 64,
+    fontWeight: '500',
+    color: '#5AC8FA',
+    textAlign: 'center'
+  },
+  logo_eia: {
+    width: 350,
+    height: 180,
+  },
+});
