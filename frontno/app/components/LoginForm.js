@@ -77,7 +77,7 @@ const LoginForm = ({ navigation }) => {
                     <FontAwesome onPress={() => setHidePassword(!hidePassword)} name={hidePassword ? 'lock' : 'unlock'} size={24}/>
                 </View>
             </View>
-            <CustomButton title="Ingresar" onPress={handleLogin}
+            <CustomButton title="Ingresar" onPress={() => navigation.navigate('Home')}
             />
             <View style={styles.other}>
                 <TouchableOpacity>

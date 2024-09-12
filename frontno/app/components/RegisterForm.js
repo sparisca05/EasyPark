@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
@@ -12,22 +12,25 @@ const RegisterForm = ({navigation}) => {
 
     return (
         <View style={styles.container}>
+            <View >
+                <Text style={styles.title}>Registro</Text>
+            </View>
             <View style={styles.form_container}>
-                <Text style={styles.title}>Correo electrónico</Text>
+                <Text style={styles.subtitle}>Correo electrónico</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="correo@eia.edu.co"
                     value={username}
                     onChangeText={setUsername} // Actualiza el estado
                     autoCapitalize="none"
-                /><Text style={styles.title}>Nombre</Text>
+                /><Text style={styles.subtitle}>Nombre</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Juan"
                     value={nombre}
                     onChangeText={setNombre} // Actualiza el estado
                     autoCapitalize="none"
-                /><Text style={styles.title}>Apellido</Text>
+                /><Text style={styles.subtitle}>Apellido</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Pérez"
@@ -35,7 +38,7 @@ const RegisterForm = ({navigation}) => {
                     onChangeText={setApellido} // Actualiza el estado
                     autoCapitalize="none"
                 />
-                <Text style={styles.title}>Contraseña</Text>
+                <Text style={styles.subtitle}>Contraseña</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="••••••••••"
@@ -61,7 +64,6 @@ const styles = StyleSheet.create({
         width: '100%',
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'flex-start',
 
     },
     form_container: {
@@ -69,6 +71,12 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     title: {
+        fontSize: 32,
+        fontWeight: '500',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    subtitle: {
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
