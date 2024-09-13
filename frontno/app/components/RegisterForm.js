@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
+import axios from 'axios';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
@@ -10,9 +11,59 @@ const RegisterForm = ({navigation}) => {
     const [apellido, setApellido] = useState('');
     const [password, setPassword] = useState('');
 
+    const validarEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    const handleRegister =async () => {
+        // Validaciones
+        if (!username || !nombre || !apellido || !password) {
+            Alert.alert('Error', 'Por favor, completa todos los campos.');
+            return;
+        }
+
+        if (!validarEmail(username)) {
+            Alert.alert('Error', 'Por favor, introduce un correo electrónico válido.');
+            return;
+        }
+       /*
+        if (password.length < 6) {
+            Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres.');
+            return;
+        }*/
+
+            const userData = {
+                username,
+                nombre,
+                apellido,
+                password
+            };
+    
+            try {
+                // Realizar la solicitud POST al backend
+                const response = await axios.post('http://172.20.10.5:8080/auth/register', userData);
+    
+                if (response.data.token) {
+                    navigation.navigate('Login');
+                } else {
+                    Alert.alert('Error', 'Hubo un problema con el registro.');
+                }
+            } catch (error) {
+                console.error('Error al registrar:', error);
+                if (error.response) {
+                    // Error del servidor
+                    Alert.alert('Error', `Servidor: ${error.response.data.message}`);
+                } else {
+                    // Otro tipo de error
+                    Alert.alert('Error', 'No se pudo conectar al servidor.');
+                }
+            }
+        };
+
     return (
         <View style={styles.container}>
-            <View >
+            <View>
                 <Text style={styles.title}>Registro</Text>
             </View>
             <View style={styles.form_container}>
@@ -21,21 +72,23 @@ const RegisterForm = ({navigation}) => {
                     style={styles.input}
                     placeholder="correo@eia.edu.co"
                     value={username}
-                    onChangeText={setUsername} // Actualiza el estado
+                    onChangeText={setUsername}
                     autoCapitalize="none"
-                /><Text style={styles.subtitle}>Nombre</Text>
+                />
+                <Text style={styles.subtitle}>Nombre</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Juan"
                     value={nombre}
-                    onChangeText={setNombre} // Actualiza el estado
+                    onChangeText={setNombre}
                     autoCapitalize="none"
-                /><Text style={styles.subtitle}>Apellido</Text>
+                />
+                <Text style={styles.subtitle}>Apellido</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Pérez"
                     value={apellido}
-                    onChangeText={setApellido} // Actualiza el estado
+                    onChangeText={setApellido}
                     autoCapitalize="none"
                 />
                 <Text style={styles.subtitle}>Contraseña</Text>
@@ -43,11 +96,11 @@ const RegisterForm = ({navigation}) => {
                     style={styles.input}
                     placeholder="••••••••••"
                     value={password}
-                    onChangeText={setPassword} // Actualiza el estado
-                    secureTextEntry={true} // Oculta el texto de la contraseña
+                    onChangeText={setPassword}
+                    secureTextEntry={true}
                 />
             </View>
-            <CustomButton title="Registrarse" onPress={() => navigation.navigate('Login')} />
+            <CustomButton title="Registrarse" onPress={handleRegister} />
             <View style={styles.other}>
                 <Text style={styles.text}>¿Ya estás registrado?  </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -58,13 +111,11 @@ const RegisterForm = ({navigation}) => {
     );
 }
 
-
 const styles = StyleSheet.create({
     container: {
         width: '100%',
         flex: 1,
         justifyContent: 'center',
-
     },
     form_container: {
         width: '100%',

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
@@ -14,7 +15,7 @@ const LoginForm = ({ navigation }) => {
     const handleLogin = async () => {
 
         const credentials = { username, password };
-        const url = 'http://localhost:8080/auth/login';
+        const url = 'http://172.20.10.5:8080/auth/login';
 
         if (username === '' || password === '') {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
@@ -26,8 +27,7 @@ const LoginForm = ({ navigation }) => {
             const token = response.data.token;
 
             if (token) {
-                Alert.alert('Éxito', 'Inicio de sesion exitoso');
-                //AsyncStorage.setItem('token', token);
+                AsyncStorage.setItem('token', token);
 
                 navigation.navigate('Home');
             } else {
@@ -77,7 +77,7 @@ const LoginForm = ({ navigation }) => {
                     <FontAwesome onPress={() => setHidePassword(!hidePassword)} name={hidePassword ? 'lock' : 'unlock'} size={24}/>
                 </View>
             </View>
-            <CustomButton title="Ingresar" onPress={() => navigation.navigate('Home')}
+            <CustomButton title="Ingresar" onPress={handleLogin}
             />
             <View style={styles.other}>
                 <TouchableOpacity>

@@ -1,14 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GlobalStyles from '../config/GlobalStyles';
 import HomeButton from '../components/HomeButton';
 
 function Home() {
+  const [usuario, setUsuario] = useState('');
+
+    useEffect(() => {
+        const obtenerUsuario = async () => {
+          try {
+            // Obtener el token desde AsyncStorage
+            const token = await AsyncStorage.getItem('token');
+
+            if (token) {
+                // Hacer la solicitud al backend para obtener el usuario
+                const response = await axios.get('http://172.20.10.5:8080/api/v1/perfil', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`  
+                    }
+                });
+
+                // Establecer el nombre del usuario en el estado
+                setUsuario(response.data);
+            } else {
+                Alert.alert('Error', 'No se encontró el token.');
+            }
+        } catch (error) {
+            console.error('Error al obtener los datos del usuario:', error);
+            if (error.response) {
+                Alert.alert('Error', `Servidor: ${error.response.data.message}`);
+            } else {
+                Alert.alert('Error', 'No se pudo conectar al servidor.');
+            }
+        }
+        };
+
+        obtenerUsuario();
+    }, []);
+
+
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.container}>
-        <Text style={styles.greeting}>Hola <Text style={styles.boldText}>Daniel</Text></Text>
+        <Text style={styles.greeting}>Hola <Text style={styles.boldText}>{usuario.nombre}</Text></Text>
         <Text style={styles.subGreeting}>¿Qué quieres hacer?</Text>
 
         <View style={styles.gridContainer}>
