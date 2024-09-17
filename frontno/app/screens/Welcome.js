@@ -8,7 +8,7 @@ function Welcome({ navigation }) {
   
     return (
       <SafeAreaView style={GlobalStyles.container}>
-        <StatusBar barStyle={'dark-content'} />
+        <StatusBar/>
           <View style={styles.container}>
             <View>
                 <Text style={styles.logo_title}>EasyPark</Text>

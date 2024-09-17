@@ -17,7 +17,7 @@ function Home() {
 
             if (token) {
                 // Hacer la solicitud al backend para obtener el usuario
-                const response = await axios.get('http://172.20.10.5:8080/api/v1/perfil', {
+                const response = await axios.get('http://172.20.10.10:8080/api/v1/perfil', {
                     headers: {
                         'Authorization': `Bearer ${token}`  
                     }
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around', 
+    justifyContent: 'center', 
   },
   logo: {
     margin: 50,

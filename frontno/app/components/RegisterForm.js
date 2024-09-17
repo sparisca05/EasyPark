@@ -42,7 +42,7 @@ const RegisterForm = ({navigation}) => {
     
             try {
                 // Realizar la solicitud POST al backend
-                const response = await axios.post('http://172.20.10.5:8080/auth/register', userData);
+                const response = await axios.post('http://172.27.6.50:8080/auth/register', userData);
     
                 if (response.data.token) {
                     navigation.navigate('Login');

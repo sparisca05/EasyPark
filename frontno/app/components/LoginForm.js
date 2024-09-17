@@ -15,7 +15,7 @@ const LoginForm = ({ navigation }) => {
     const handleLogin = async () => {
 
         const credentials = { username, password };
-        const url = 'http://172.20.10.5:8080/auth/login';
+        const url = 'http://172.20.10.10:8080/auth/login';
 
         if (username === '' || password === '') {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
@@ -28,7 +28,6 @@ const LoginForm = ({ navigation }) => {
 
             if (token) {
                 AsyncStorage.setItem('token', token);
-
                 navigation.navigate('Home');
             } else {
                 Alert.alert('Error', 'Usuario o contraseña malos');
@@ -62,6 +61,7 @@ const LoginForm = ({ navigation }) => {
                         value={username}
                         onChangeText={setUsername} // Actualiza el estado
                         autoCapitalize="none"
+                        keyboardType='email-address' // Teclado de correo electrónico
                     />
                     <MaterialIcons name='email' size={24}/>
                 </View>
@@ -80,7 +80,7 @@ const LoginForm = ({ navigation }) => {
             <CustomButton title="Ingresar" onPress={handleLogin}
             />
             <View style={styles.other}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => Alert.alert('Acuérdese como pueda papi')}>
                     <Text style={[styles.text, {color: 'cornflowerblue',}]}>¿Olvidaste tu contraseña?</Text>
                 </TouchableOpacity>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
