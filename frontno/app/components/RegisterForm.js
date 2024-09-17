@@ -16,7 +16,7 @@ const RegisterForm = ({navigation}) => {
         return regex.test(email);
     };
 
-    const handleRegister =async () => {
+    const handleRegister = async () => {
         // Validaciones
         if (!username || !nombre || !apellido || !password) {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
@@ -42,7 +42,7 @@ const RegisterForm = ({navigation}) => {
     
             try {
                 // Realizar la solicitud POST al backend
-                const response = await axios.post('http://172.27.6.50:8080/auth/register', userData);
+                const response = await axios.post('http://172.20.10.13:8080/auth/register', userData);
     
                 if (response.data.token) {
                     navigation.navigate('Login');
@@ -72,6 +72,7 @@ const RegisterForm = ({navigation}) => {
                     style={styles.input}
                     placeholder="correo@eia.edu.co"
                     value={username}
+                    keyboardType='email-address'
                     onChangeText={setUsername}
                     autoCapitalize="none"
                 />
@@ -81,7 +82,7 @@ const RegisterForm = ({navigation}) => {
                     placeholder="Juan"
                     value={nombre}
                     onChangeText={setNombre}
-                    autoCapitalize="none"
+                    autoCapitalize="words"
                 />
                 <Text style={styles.subtitle}>Apellido</Text>
                 <TextInput
@@ -89,7 +90,7 @@ const RegisterForm = ({navigation}) => {
                     placeholder="Pérez"
                     value={apellido}
                     onChangeText={setApellido}
-                    autoCapitalize="none"
+                    autoCapitalize="words"
                 />
                 <Text style={styles.subtitle}>Contraseña</Text>
                 <TextInput

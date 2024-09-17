@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GlobalStyles from '../config/GlobalStyles';
 import HomeButton from '../components/HomeButton';
 
-function Home() {
+function Home({ navigation }) {
   const [usuario, setUsuario] = useState('');
 
     useEffect(() => {
@@ -17,7 +17,7 @@ function Home() {
 
             if (token) {
                 // Hacer la solicitud al backend para obtener el usuario
-                const response = await axios.get('http://172.20.10.10:8080/api/v1/perfil', {
+                const response = await axios.get('http://172.20.10.13:8080/api/v1/perfil', {
                     headers: {
                         'Authorization': `Bearer ${token}`  
                     }
@@ -52,7 +52,7 @@ function Home() {
           <HomeButton text="Consultar saldo" icon={require('../assets/Balance.png')}/>
           <HomeButton text="Recarga" icon={require('../assets/Reload.png')}/>
           <HomeButton text="Ticket día" icon={require('../assets/ticket.png')}/>
-          <HomeButton text="Registra tu vehículo" icon={require('../assets/Car.png')}/>
+          <HomeButton text="Registra tu vehículo" icon={require('../assets/Car.png')} onPress={() => navigation.navigate("Registrar Vehiculo")}/>
         </View>
         
         <Image source={require('../assets/logo2.png')} style={styles.logo_eia}/>
