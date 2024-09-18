@@ -8,26 +8,26 @@ import Login from './app/screens/Login';
 import Register from './app/screens/Register';
 import Home from './app/screens/Home';
 import RegistraVehiculo from './app/screens/RegistraVehiculo';
+import { ApiUrlProvider } from './app/config/ApiUrlContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
   return (
-    //<Welcome />
-    
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }}/>
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
-          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-          <Stack.Screen name="Registrar Vehiculo" component={RegistraVehiculo} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
-
+    <ApiUrlProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Welcome">
+            <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }}/>
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+            <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+            <Stack.Screen name="Registrar Vehiculo" component={RegistraVehiculo} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ApiUrlProvider>
   );
 }
 

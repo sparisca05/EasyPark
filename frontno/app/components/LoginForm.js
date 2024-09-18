@@ -6,16 +6,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
+import { useApiUrl } from '../config/ApiUrlContext';
 
 const LoginForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
+    const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
 
     const handleLogin = async () => {
 
         const credentials = { username, password };
-        const url = 'http://172.20.10.13:8080/auth/login';
+        const url = `${apiUrl}/auth/login`;
 
         if (username === '' || password === '') {
             Alert.alert('Error', 'Por favor, completa todos los campos.');

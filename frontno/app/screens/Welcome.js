@@ -5,7 +5,7 @@ import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from '../components/CustomButton';
 
 function Welcome({ navigation }) {
-  
+
     return (
       <SafeAreaView style={GlobalStyles.container}>
         <StatusBar/>

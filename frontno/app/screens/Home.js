@@ -5,9 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GlobalStyles from '../config/GlobalStyles';
 import HomeButton from '../components/HomeButton';
+import { useApiUrl } from '../config/ApiUrlContext';
 
 function Home({ navigation }) {
   const [usuario, setUsuario] = useState('');
+  const apiUrl = useApiUrl();
 
     useEffect(() => {
         const obtenerUsuario = async () => {
@@ -17,7 +19,7 @@ function Home({ navigation }) {
 
             if (token) {
                 // Hacer la solicitud al backend para obtener el usuario
-                const response = await axios.get('http://172.20.10.13:8080/api/v1/perfil', {
+                const response = await axios.get(`${apiUrl}/api/v1/perfil`, {
                     headers: {
                         'Authorization': `Bearer ${token}`  
                     }

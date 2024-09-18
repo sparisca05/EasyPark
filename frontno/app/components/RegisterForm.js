@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { FontAwesome } from '@expo/vector-icons';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
+import { useApiUrl } from '../config/ApiUrlContext';
 
 const RegisterForm = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [password, setPassword] = useState('');
+    const [hidePassword, setHidePassword] = useState(true);
+    const apiUrl = useApiUrl();
 
     const validarEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,7 +46,7 @@ const RegisterForm = ({navigation}) => {
     
             try {
                 // Realizar la solicitud POST al backend
-                const response = await axios.post('http://172.20.10.13:8080/auth/register', userData);
+                const response = await axios.post(`${apiUrl}/auth/register`, userData);
     
                 if (response.data.token) {
                     navigation.navigate('Login');
@@ -67,15 +71,6 @@ const RegisterForm = ({navigation}) => {
                 <Text style={styles.title}>Registro</Text>
             </View>
             <View style={styles.form_container}>
-                <Text style={styles.subtitle}>Correo electrónico</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="correo@eia.edu.co"
-                    value={username}
-                    keyboardType='email-address'
-                    onChangeText={setUsername}
-                    autoCapitalize="none"
-                />
                 <Text style={styles.subtitle}>Nombre</Text>
                 <TextInput
                     style={styles.input}
@@ -92,14 +87,26 @@ const RegisterForm = ({navigation}) => {
                     onChangeText={setApellido}
                     autoCapitalize="words"
                 />
-                <Text style={styles.subtitle}>Contraseña</Text>
+                <Text style={styles.subtitle}>Correo electrónico</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="••••••••••"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={true}
+                    placeholder="correo@eia.edu.co"
+                    value={username}
+                    keyboardType='email-address'
+                    onChangeText={setUsername}
+                    autoCapitalize="none"
                 />
+                <Text style={styles.subtitle}>Contraseña</Text>
+                <View style={styles.input}>
+                    <TextInput
+                        style={{width: '90%'}}
+                        placeholder="••••••••••"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={hidePassword}
+                    />
+                    <FontAwesome onPress={() => setHidePassword(!hidePassword)} name={hidePassword ? 'lock' : 'unlock'} size={24}/>
+                </View>
             </View>
             <CustomButton title="Registrarse" onPress={handleRegister} />
             <View style={styles.other}>
@@ -134,6 +141,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     input: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         height: 40,
         width: '100%',
         backgroundColor: GlobalStyles.light,
