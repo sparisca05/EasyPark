@@ -1,9 +1,8 @@
 package com.example.back.services;
 
-import com.example.back.entity.Usuario;
-import com.example.back.entity.UsuarioInfo;
-import com.example.back.repositories.IUsuarioRepository;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +10,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.example.back.entity.RecargaRequest;
+import com.example.back.entity.Transaccion;
+import com.example.back.entity.Usuario;
+import com.example.back.entity.UsuarioInfo;
+import com.example.back.repositories.ITransaccionRepository;
+import com.example.back.repositories.IUsuarioRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +26,8 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private IUsuarioRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ITransaccionRepository transaccionRepository;
+
 
     public void saveUser(Usuario user) {
         // Encripta la contraseña antes de guardarla
@@ -37,6 +45,7 @@ public class UsuarioService implements UserDetailsService {
         userInfo.setApellido(user.getApellido());
         userInfo.setUsername(user.getUsername());
         userInfo.setPassword(user.getPassword());
+        userInfo.setSaldo(user.getSaldo());
 
         return userInfo;
     }
@@ -75,6 +84,36 @@ public class UsuarioService implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         userRepository.delete(user);
         return "Usuario eliminado";
+    }
+    
+    public void recargarSaldo(Long idUsuario, RecargaRequest monto) {
+    // Buscar el usuario por ID
+    Usuario usuario = userRepository.findById(idUsuario)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+    // Actualizar el saldo del usuario
+    usuario.setSaldo(usuario.getSaldo() + monto.getMonto());
+    userRepository.save(usuario);
+
+    // Crear y guardar una nueva transacción
+    Transaccion transaccion = new Transaccion();
+    transaccion.setMonto(monto.getMonto());
+    transaccion.setFecha(LocalDateTime.now()); // Fecha actual
+    transaccion.setUsuario(usuario);
+    transaccionRepository.save(transaccion);
+    }
+
+    public UsuarioInfo consultarSaldo(String username) {
+        // Buscar el usuario por nombre de usuario
+        Usuario usuario = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Crear un objeto UsuarioInfo para devolver saldo y transacciones
+        UsuarioInfo usuarioInfo = new UsuarioInfo();
+        usuarioInfo.setSaldo(usuario.getSaldo());
+        usuarioInfo.setTransacciones(usuario.getTransacciones()); // Lista de transacciones
+
+        return usuarioInfo;
     }
 
 }
