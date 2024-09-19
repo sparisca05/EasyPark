@@ -12,9 +12,8 @@ export const useApiUrl = () => {
 
 // Proveedor del contexto
 export const ApiUrlProvider = ({ children }) => {
-  const apiUrl = API_URL; // O importarlo de '@env' si prefieres
   return (
-    <ApiUrlContext.Provider value={apiUrl}>
+    <ApiUrlContext.Provider value={API_URL}>
       {children}
     </ApiUrlContext.Provider>
   );

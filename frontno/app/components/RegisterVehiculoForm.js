@@ -7,7 +7,7 @@ import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
 import { useApiUrl } from '../config/ApiUrlContext';
 
-const RegisterVehiculoForm = ({ navigation }) => {
+const RegisterVehiculoForm = () => {
     // Estado para almacenar los datos introducidos por el usuario
     const [documento, setDocumento] = useState('');
     const [programa, setPrograma] = useState('');
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
     },
     form_container: {
         width: '100%',

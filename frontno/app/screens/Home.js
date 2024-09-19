@@ -51,7 +51,7 @@ function Home({ navigation }) {
         <Text style={styles.subGreeting}>¿Qué quieres hacer?</Text>
 
         <View style={styles.gridContainer}>
-          <HomeButton text="Consultar saldo" icon={require('../assets/Balance.png')}/>
+          <HomeButton text="Consultar saldo" icon={require('../assets/Balance.png')} onPress={() => navigation.navigate("Consultar Saldo")}/>
           <HomeButton text="Recarga" icon={require('../assets/Reload.png')}/>
           <HomeButton text="Ticket día" icon={require('../assets/ticket.png')}/>
           <HomeButton text="Registra tu vehículo" icon={require('../assets/Car.png')} onPress={() => navigation.navigate("Registrar Vehiculo")}/>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 24,
-    color: '#2E3A5E',
+    color: GlobalStyles.dark,
     marginBottom: 5,
   },
   boldText: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   subGreeting: {
     fontSize: 18,
-    color: '#2E3A5E',
+    color: GlobalStyles.dark,
     marginBottom: 10,
   },
   gridContainer: {

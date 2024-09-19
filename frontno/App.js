@@ -8,6 +8,7 @@ import Login from './app/screens/Login';
 import Register from './app/screens/Register';
 import Home from './app/screens/Home';
 import RegistraVehiculo from './app/screens/RegistraVehiculo';
+import ConsultarSaldo from './app/screens/ConsultarSaldo';
 import { ApiUrlProvider } from './app/config/ApiUrlContext';
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
             <Stack.Screen name="Registrar Vehiculo" component={RegistraVehiculo} />
+            <Stack.Screen name="Consultar Saldo" component={ConsultarSaldo} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

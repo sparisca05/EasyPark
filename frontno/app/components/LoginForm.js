@@ -18,7 +18,7 @@ const LoginForm = ({ navigation }) => {
     const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
 
     const handleLogin = async () => {
-
+        console.log(apiUrl);
         const credentials = { username, password };
         const url = `${apiUrl}/auth/login`;
 
