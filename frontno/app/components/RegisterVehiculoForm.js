@@ -3,9 +3,9 @@ import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'reac
 import RNPickerSelect from 'react-native-picker-select';  // Importa el nuevo picker
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
+import { useApiUrl } from '../config/ApiUrlContext';
 
 const RegisterVehiculoForm = ({ navigation }) => {
     // Estado para almacenar los datos introducidos por el usuario
@@ -14,12 +14,15 @@ const RegisterVehiculoForm = ({ navigation }) => {
     const [vehiculo, setVehiculo] = useState('');
     const [placa, setPlaca] = useState('');
 
+    const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
+    const url = `${apiUrl}/api/v1/registra-vehiculo`;
+
     // Función para manejar el registro del vehículo
     const handleRegisterVehicle = async () => {
         // Aquí haces la solicitud al backend para guardar los datos
         try {
             const token = await AsyncStorage.getItem('token');
-            await axios.post('http://172.20.10.13:8080/api/v1/registra-vehiculo', {
+            await axios.post(url , {
                 documento,
                 programa,
                 vehiculo,
@@ -33,8 +36,7 @@ const RegisterVehiculoForm = ({ navigation }) => {
             });
 
             if (token) {
-                // Aquí puedes redirigir o limpiar los campos si lo deseas
-                navigation.navigate('Home');  // Opcionalmente, navega a otra pantalla
+                Alert.alert('Éxito', 'El vehículo se ha registrado.')
             } else {
                 Alert.alert('Error', 'No se pudo registrar el vehículo');
             }

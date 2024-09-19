@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
+import LoadingComponent from '../config/Loading';
 import { useApiUrl } from '../config/ApiUrlContext';
 
 const LoginForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
+    const [loading, setLoading] = useState(false);  // Estado para mostrar una carga
+
     const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
 
     const handleLogin = async () => {
@@ -23,35 +26,39 @@ const LoginForm = ({ navigation }) => {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
             return;
         }
-
+        setLoading(true);
         try {
             const response = await axios.post(url, credentials);
             const token = response.data.token;
 
             if (token) {
                 AsyncStorage.setItem('token', token);
-
+                setLoading(false);
                 navigation.navigate('Home');
-            } else {
-                Alert.alert('Error', 'Usuario o contraseña malos');
             }
         } catch (error) {
             console.log('Error capturado:', error);
             if (error.response) {
                 // Error de respuesta del servidor
-                console.log('Error de respuesta:', error.response.data);
-                Alert.alert('Error', 'Problema con la autenticación');
+                Alert.alert('Error', 'Usuario o contraseña erróneos, por favor intente de nuevo.');
+                setLoading(false);
             } else if (error.request) {
                 // La solicitud fue enviada pero no hubo respuesta
-                console.log('Error de solicitud:', error.request);
-                Alert.alert('Error', 'No se pudo conectar al servidor');
+                Alert.alert('Error', 'No se pudo conectar al servidor, inténtelo mas tarde');
+                setLoading(false);
             } else {
                 // Error al configurar la solicitud
-                console.log('Error en la configuración:', error.message);
                 Alert.alert('Error', 'Error al configurar la solicitud');
+                setLoading(false);
             }
         }
     };
+
+    if (loading) {
+        return (
+            <LoadingComponent/>
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -83,7 +90,7 @@ const LoginForm = ({ navigation }) => {
             <CustomButton title="Ingresar" onPress={handleLogin}
             />
             <View style={styles.other}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => Alert.alert('bobo hpta','Acuérdese como pueda papi')}>
                     <Text style={[styles.text, {color: 'cornflowerblue',}]}>¿Olvidaste tu contraseña?</Text>
                 </TouchableOpacity>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
