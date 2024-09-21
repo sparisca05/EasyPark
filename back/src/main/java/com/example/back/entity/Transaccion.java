@@ -1,7 +1,5 @@
 package com.example.back.entity;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -21,7 +19,7 @@ public class Transaccion {
 
     private double monto;
     
-    private LocalDateTime fecha;
+    private String fecha;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")

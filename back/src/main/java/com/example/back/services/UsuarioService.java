@@ -1,6 +1,7 @@
 package com.example.back.services;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,20 +88,21 @@ public class UsuarioService implements UserDetailsService {
     }
     
     public void recargarSaldo(Long idUsuario, RecargaRequest monto) {
-    // Buscar el usuario por ID
-    Usuario usuario = userRepository.findById(idUsuario)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        // Buscar el usuario por ID
+        Usuario usuario = userRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-    // Actualizar el saldo del usuario
-    usuario.setSaldo(usuario.getSaldo() + monto.getMonto());
-    userRepository.save(usuario);
+        // Actualizar el saldo del usuario
+        usuario.setSaldo(usuario.getSaldo() + monto.getMonto());
+        userRepository.save(usuario);
 
-    // Crear y guardar una nueva transacción
-    Transaccion transaccion = new Transaccion();
-    transaccion.setMonto(monto.getMonto());
-    transaccion.setFecha(LocalDateTime.now()); // Fecha actual
-    transaccion.setUsuario(usuario);
-    transaccionRepository.save(transaccion);
+        // Crear y guardar una nueva transacción
+        Transaccion transaccion = new Transaccion();
+        transaccion.setMonto(monto.getMonto());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        transaccion.setFecha(LocalDateTime.now().format(formatter));
+        transaccion.setUsuario(usuario);
+        transaccionRepository.save(transaccion);
     }
 
     public UsuarioInfo consultarSaldo(String username) {
@@ -111,7 +113,7 @@ public class UsuarioService implements UserDetailsService {
         // Crear un objeto UsuarioInfo para devolver saldo y transacciones
         UsuarioInfo usuarioInfo = new UsuarioInfo();
         usuarioInfo.setSaldo(usuario.getSaldo());
-        usuarioInfo.setTransacciones(usuario.getTransacciones()); // Lista de transacciones
+        usuarioInfo.setTransacciones(transaccionRepository.findTop5ByUsuarioOrderByFechaDesc(usuario)); // Lista de las últimas 5 transacciones
 
         return usuarioInfo;
     }
