@@ -9,7 +9,6 @@ import { useApiUrl } from '../config/ApiUrlContext';
 
 function ConsultarSaldo({ navigation }) {
   const [usuario, setUsuario] = useState('');
-  const [transacciones, setTransacciones] = useState([]);
   const apiUrl = useApiUrl();
 
   useEffect(() => {
@@ -20,7 +19,7 @@ function ConsultarSaldo({ navigation }) {
 
         if (token) {
           // Hacer la solicitud al backend para obtener el perfil del usuario
-          const response = await axios.get(`${apiUrl}/api/v1/perfil`, {
+          const response = await axios.get(`${apiUrl}/api/v1/perfil/saldo`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -28,7 +27,6 @@ function ConsultarSaldo({ navigation }) {
 
           // Establecer el usuario y las transacciones en el estado
           setUsuario(response.data);
-          setTransacciones(response.data.transacciones); // Supongo que las transacciones están en "response.data.transacciones"
         } else {
           Alert.alert('Error', 'No se encontró el token.');
         }
@@ -59,11 +57,9 @@ function ConsultarSaldo({ navigation }) {
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.container}>
         <Text style={styles.greeting}>Tu saldo: {usuario.saldo?.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })} COP</Text>
-      
 
-        {/* Lista de transacciones recientes */}
         <FlatList
-          data={transacciones}
+          data={usuario.transacciones}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           style={styles.transactionList}
