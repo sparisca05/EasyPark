@@ -7,18 +7,45 @@ import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
 import { useApiUrl } from '../config/ApiUrlContext';
 
-const RegisterVehiculoForm = () => {
+const RegisterVehiculoForm = ({navigation}) => {
     // Estado para almacenar los datos introducidos por el usuario
     const [documento, setDocumento] = useState('');
     const [programa, setPrograma] = useState('');
     const [vehiculo, setVehiculo] = useState('');
     const [placa, setPlaca] = useState('');
+    const programas = [
+        { label: 'Economía', value: 'Economia' },
+        { label: 'Empleado', value: 'Empleado' },
+        { label: 'Física', value: 'Fisica' },
+        { label: 'Ingeniería Administrativa', value: 'Ingenieria Administrativa' },
+        { label: 'Ingeniería Ambiental', value: 'Ingenieria Ambiental' },
+        { label: 'Ingeniería Biomédica', value: 'Ingenieria Biomedica' },
+        { label: 'Ingeniería Biotecnológica', value: 'Ingenieria Biotecnologica' },
+        { label: 'Ingeniería Civil', value: 'Ingenieria Civil' },
+        { label: 'Ingeniería Financiera', value: 'Ingenieria Financiera' },
+        { label: 'Ingeniería Geológica', value: 'Ingenieria Geologica' },
+        { label: 'Ingeniería Industrial', value: 'Ingenieria Industrial' },
+        { label: 'Ingeniería Mecánica', value: 'Ingenieria Mecanica' },
+        { label: 'Ingeniería Mecatrónica', value: 'Ingenieria Mecatronica' },
+        { label: 'Ingeniería de Sistemas y Computación', value: 'Ingenieria de Sistemas y Computacion' },
+        { label: 'Postgrados', value: 'Postgrados' },
+        { label: 'Medicina', value: 'Medicina' },
+    ];
+    const vehiculos = [
+        { label: 'Carro', value: 'carro' },
+        { label: 'Moto', value: 'moto' }
+    ];
 
     const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
     const url = `${apiUrl}/api/v1/registra-vehiculo`;
 
     // Función para manejar el registro del vehículo
     const handleRegisterVehicle = async () => {
+        // Validaciones
+        if (!documento || programa || !vehiculo || !placa) {
+            Alert.alert('Error', 'Por favor, completa todos los campos.');
+            return;
+        }
         // Aquí haces la solicitud al backend para guardar los datos
         try {
             const token = await AsyncStorage.getItem('token');
@@ -36,13 +63,14 @@ const RegisterVehiculoForm = () => {
             });
 
             if (token) {
-                Alert.alert('Éxito', 'El vehículo se ha registrado.')
+                Alert.alert('Éxito', 'El vehículo se ha registrado.', [
+                    { text: 'OK', onPress: () => navigation.goBack() },
+                ]);
             } else {
                 Alert.alert('Error', 'No se pudo registrar el vehículo');
             }
         } catch (error) {
-            console.error('Error al registrar el vehículo:', error);
-            Alert.alert('Error', 'Hubo un problema al registrar el vehículo');
+            Alert.alert('Error', 'Este vehículo ya existe');
         }
     };
 
@@ -53,7 +81,7 @@ const RegisterVehiculoForm = () => {
                 <Text style={styles.subtitle}>Documento</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="ingresa tu numero de documento"
+                    placeholder="Ingresa tu número de documento"
                     value={documento}
                     onChangeText={setDocumento}
                     autoCapitalize="none"
@@ -61,25 +89,8 @@ const RegisterVehiculoForm = () => {
                 <Text style={styles.subtitle}>Programa:</Text>
                 <RNPickerSelect
                     onValueChange={(value) => setPrograma(value)}
-                    items={[
-                        { label: 'Economía', value: 'Economia' },
-                        { label: 'Empleado', value: 'Empleado' },
-                        { label: 'Física', value: 'Fisica' },
-                        { label: 'Ingeniería Administrativa', value: 'Ingenieria Administrativa' },
-                        { label: 'Ingeniería Ambiental', value: 'Ingenieria Ambiental' },
-                        { label: 'Ingeniería Biomédica', value: 'Ingenieria Biomedica' },
-                        { label: 'Ingeniería Biotecnológica', value: 'Ingenieria Biotecnologica' },
-                        { label: 'Ingeniería Civil', value: 'Ingenieria Civil' },
-                        { label: 'Ingeniería Financiera', value: 'Ingenieria Financiera' },
-                        { label: 'Ingeniería Geológica', value: 'Ingenieria Geologica' },
-                        { label: 'Ingeniería Industrial', value: 'Ingenieria Industrial' },
-                        { label: 'Ingeniería Mecánica', value: 'Ingenieria Mecanica' },
-                        { label: 'Ingeniería Mecatrónica', value: 'Ingenieria Mecatronica' },
-                        { label: 'Ingeniería de Sistemas y Computación', value: 'Ingenieria de Sistemas y Computacion' },
-                        { label: 'Postgrados', value: 'Postgrados' },
-                        { label: 'Medicina', value: 'Medicina' },
-                    ]}
-                    placeholder={{
+                    items={programas}
+                    default={{
                         label: 'Selecciona tu programa...',
                     }}
                     style={pickerSelectStyles}
@@ -87,11 +98,8 @@ const RegisterVehiculoForm = () => {
                 <Text style={styles.subtitle}>Vehículo</Text>
                 <RNPickerSelect
                     onValueChange={(value) => setVehiculo(value)}
-                    items={[
-                        { label: 'Carro', value: 'carro' },
-                        { label: 'Moto', value: 'moto' }
-                    ]}
-                    placeholder={{
+                    items={vehiculos}
+                    default={{
                         label: 'Selecciona tu vehículo...',
                     }}
                     style={pickerSelectStyles}

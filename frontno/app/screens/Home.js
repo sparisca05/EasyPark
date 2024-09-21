@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GlobalStyles from '../config/GlobalStyles';
 import HomeButton from '../components/HomeButton';
 import { useApiUrl } from '../config/ApiUrlContext';
+import LogoutButton from '../components/LogoutButton';
 
 function Home({ navigation }) {
   const [usuario, setUsuario] = useState('');
@@ -47,6 +48,7 @@ function Home({ navigation }) {
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.container}>
+        <LogoutButton navigation={navigation} />
         <Text style={styles.greeting}>Hola <Text style={styles.boldText}>{usuario.nombre}</Text></Text>
         <Text style={styles.subGreeting}>¿Qué quieres hacer?</Text>
 

@@ -23,7 +23,7 @@ export default function App() {
             <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }}/>
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false, gestureEnabled: false }}/>
             <Stack.Screen name="Registrar Vehiculo" component={RegistraVehiculo} />
             <Stack.Screen name="Consultar Saldo" component={ConsultarSaldo} />
           </Stack.Navigator>
