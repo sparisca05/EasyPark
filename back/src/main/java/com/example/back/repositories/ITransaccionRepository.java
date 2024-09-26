@@ -11,6 +11,6 @@ import com.example.back.entity.Usuario;
 @Repository
 public interface ITransaccionRepository extends JpaRepository<Transaccion, Long> {
 
-    List<Transaccion> findTop5ByUsuarioOrderByFechaDesc(Usuario usuario);
+    List<Transaccion> findTop5ByUsuarioOrderByFechaAsc(Usuario usuario);
 
 }

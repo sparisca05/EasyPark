@@ -2,30 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, FlatList, Dimensions, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BarChart } from 'react-native-chart-kit';
+import { LineChart } from 'react-native-chart-kit';
 
 import GlobalStyles from '../config/GlobalStyles';
 import { useApiUrl } from '../config/ApiUrlContext';
 
 function ConsultarSaldo({ navigation }) {
-  const [usuario, setUsuario] = useState('');
+  const [usuario, setUsuario] = useState({});
   const apiUrl = useApiUrl();
 
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-        // Obtener el token desde AsyncStorage
         const token = await AsyncStorage.getItem('token');
 
         if (token) {
-          // Hacer la solicitud al backend para obtener el perfil del usuario
           const response = await axios.get(`${apiUrl}/api/v1/perfil/saldo`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           });
 
-          // Establecer el usuario y las transacciones en el estado
           setUsuario(response.data);
         } else {
           Alert.alert('Error', 'No se encontró el token.');
@@ -53,18 +50,66 @@ function ConsultarSaldo({ navigation }) {
     </View>
   );
 
+  const calcularSaldosAcumulados = (transacciones) => {
+    let saldoAcumulado = 0;
+    return transacciones.map(transaccion => {
+      saldoAcumulado += transaccion.monto;
+      return saldoAcumulado;
+    });
+  };
+
+  // Verificar si existen transacciones y calcular los saldos acumulados
+  const saldosAcumulados = usuario.transacciones ? calcularSaldosAcumulados(usuario.transacciones) : [];
+  
+  // Crear etiquetas para el eje X
+  const labels = usuario.transacciones ? usuario.transacciones.map((_, index) => (index + 1).toString()) : [];
+
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.container}>
         <Text style={styles.greeting}>Tu saldo: {usuario.saldo?.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })} COP</Text>
-
+        
+        {/* Gráfico de saldos acumulados */}
+        {saldosAcumulados.length > 0 && (
+          <LineChart
+            data={{
+              labels,
+              datasets: [
+                {
+                  data: [0].concat(saldosAcumulados) // Agrega un valor inicial de cero
+                }
+              ]
+            }}
+            width={Dimensions.get('window').width} // Ajusta el ancho del gráfico
+            height={220}
+            yAxisLabel="$"
+            chartConfig={{
+              backgroundColor: "black",
+              backgroundGradientFrom: "white",
+              backgroundGradientTo: "white",
+              decimalPlaces: 2,
+              color: (opacity = 0) => `black`,
+              labelColor: (opacity = 0) => `black`,
+              style: {
+                borderRadius: 10,
+                padding: 8
+              },
+              propsForDots: {
+                r: "4",
+                strokeWidth: "1",
+                stroke: "white"
+              }
+            }}
+          />
+        )}
+        {usuario.transacciones &&
         <FlatList
-          data={usuario.transacciones}
+          data={usuario.transacciones.reverse()}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           style={styles.transactionList}
         />
-        
+        }
       </View>
     </SafeAreaView>
   );
