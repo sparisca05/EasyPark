@@ -42,7 +42,7 @@ const RegisterVehiculoForm = ({navigation}) => {
     // Función para manejar el registro del vehículo
     const handleRegisterVehicle = async () => {
         // Validaciones
-        if (!documento || programa || !vehiculo || !placa) {
+        if (!documento || !programa || !vehiculo || !placa) {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
             return;
         }
