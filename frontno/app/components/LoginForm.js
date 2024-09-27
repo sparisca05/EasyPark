@@ -20,7 +20,7 @@ const LoginForm = ({ navigation }) => {
     const handleLogin = async () => {
         const credentials = { username, password };
         const url = `${apiUrl}/auth/login`;
-
+        
         if (username === '' || password === '') {
             Alert.alert('Error', 'Por favor, completa todos los campos.');
             return;

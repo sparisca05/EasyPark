@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, FlatList, Dimensions, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LineChart } from 'react-native-chart-kit';
+import { BarChart } from 'react-native-chart-kit';
 
 import GlobalStyles from '../config/GlobalStyles';
 import { useApiUrl } from '../config/ApiUrlContext';
@@ -57,59 +57,66 @@ function ConsultarSaldo({ navigation }) {
       return saldoAcumulado;
     });
   };
-
-  // Verificar si existen transacciones y calcular los saldos acumulados
-  const saldosAcumulados = usuario.transacciones ? calcularSaldosAcumulados(usuario.transacciones) : [];
+ const saldosAcumulados = usuario.transacciones ? calcularSaldosAcumulados(usuario.transacciones) : [];
   
-  // Crear etiquetas para el eje X
-  const labels = usuario.transacciones ? usuario.transacciones.map((_, index) => (index + 1).toString()) : [];
+  // Crear etiquetas para el eje X usando las fechas de las transacciones
+  const labels = usuario.transacciones ? usuario.transacciones.map(transaccion => transaccion.fecha.slice(0, 5)) : [];
+
+  // Crear datasets separados para valores positivos y negativos
+  const positiveData = saldosAcumulados.map(value => (value > 0 ? value : 0));
+  const negativeData = saldosAcumulados.map(value => (value < 0 ? value : 0));
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.container}>
         <Text style={styles.greeting}>Tu saldo: {usuario.saldo?.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })} COP</Text>
         
-        {/* Gráfico de saldos acumulados */}
+        {/* Gráfico de barras de saldos acumulados */}
         {saldosAcumulados.length > 0 && (
-          <LineChart
+          <BarChart
             data={{
               labels,
               datasets: [
                 {
-                  data: [0].concat(saldosAcumulados) // Agrega un valor inicial de cero
-                }
+                  data: positiveData,
+                },
+                {
+                  data: negativeData,
+                },
               ]
             }}
-            width={Dimensions.get('window').width} // Ajusta el ancho del gráfico
+            width={Dimensions.get('window').width - 40} // Ajusta el ancho del gráfico
             height={220}
             yAxisLabel="$"
+            yAxisSuffix=""
+            yAxisInterval={1} // Intervalo de 1, que luego se ajustará en los valores
             chartConfig={{
-              backgroundColor: "black",
-              backgroundGradientFrom: "white",
-              backgroundGradientTo: "white",
-              decimalPlaces: 2,
-              color: (opacity = 0) => `black`,
-              labelColor: (opacity = 0) => `black`,
+              backgroundColor: "#ffffff",
+              backgroundGradientFrom: "#ffffff",
+              backgroundGradientTo: "#ffffff",
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: () => `rgb(0, 0, 0)`,
               style: {
-                borderRadius: 10,
-                padding: 8
+                borderRadius: 16
               },
-              propsForDots: {
-                r: "4",
-                strokeWidth: "1",
-                stroke: "white"
-              }
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16
             }}
           />
         )}
-        {usuario.transacciones &&
-        <FlatList
-          data={usuario.transacciones.reverse()}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          style={styles.transactionList}
-        />
-        }
+
+        {/* Lista de transacciones */}
+        {usuario.transacciones && (
+          <FlatList
+            data={usuario.transacciones.reverse()} // Invierte el orden para mostrar las más recientes primero
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            style={styles.transactionList}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

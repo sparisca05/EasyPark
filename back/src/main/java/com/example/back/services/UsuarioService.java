@@ -113,7 +113,7 @@ public class UsuarioService implements UserDetailsService {
         // Crear un objeto UsuarioInfo para devolver saldo y transacciones
         UsuarioInfo usuarioInfo = new UsuarioInfo();
         usuarioInfo.setSaldo(usuario.getSaldo());
-        usuarioInfo.setTransacciones(transaccionRepository.findTop5ByUsuarioOrderByFechaAsc(usuario)); // Lista de las últimas 5 transacciones
+        usuarioInfo.setTransacciones(transaccionRepository.findTop5ByUsuarioOrderByFechaDesc(usuario)); // Lista de las últimas 5 transacciones
 
         return usuarioInfo;
     }

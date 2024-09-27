@@ -7,7 +7,7 @@ const ApiUrlContext = createContext();
 
 // Hook personalizado para usar el contexto
 export const useApiUrl = () => {
-  return useContext(ApiUrlContext);
+  return API_URL;
 };
 
 // Proveedor del contexto
