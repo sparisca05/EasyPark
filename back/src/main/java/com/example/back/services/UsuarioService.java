@@ -2,6 +2,7 @@ package com.example.back.services;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,12 @@ public class UsuarioService implements UserDetailsService {
         usuarioInfo.setTransacciones(transaccionRepository.findTop5ByUsuarioOrderByFechaDesc(usuario)); // Lista de las últimas 5 transacciones
 
         return usuarioInfo;
+    }
+
+    public List<Transaccion> getAllTransacciones(String username) {
+        Usuario usuario = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return transaccionRepository.findByUsuario(usuario);
     }
 
 }

@@ -50,21 +50,25 @@ function ConsultarSaldo({ navigation }) {
     </View>
   );
 
+  const calcularSaldoInicial = (transacciones) => {
+    let saldoInicial = usuario.saldo;
+    return transacciones.map(transaccion => {
+      saldoInicial -= transaccion.monto;
+      return saldoInicial;
+    });
+  }
+
   const calcularSaldosAcumulados = (transacciones) => {
-    let saldoAcumulado = 0;
+    let saldoAcumulado = calcularSaldoInicial(transacciones)[transacciones.length - 1];
     return transacciones.map(transaccion => {
       saldoAcumulado += transaccion.monto;
       return saldoAcumulado;
     });
   };
- const saldosAcumulados = usuario.transacciones ? calcularSaldosAcumulados(usuario.transacciones) : [];
+ const saldosAcumulados = usuario.transacciones ? calcularSaldosAcumulados(usuario.transacciones.reverse()) : [];
   
   // Crear etiquetas para el eje X usando las fechas de las transacciones
   const labels = usuario.transacciones ? usuario.transacciones.map(transaccion => transaccion.fecha.slice(0, 5)) : [];
-
-  // Crear datasets separados para valores positivos y negativos
-  const positiveData = saldosAcumulados.map(value => (value > 0 ? value : 0));
-  const negativeData = saldosAcumulados.map(value => (value < 0 ? value : 0));
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -72,51 +76,51 @@ function ConsultarSaldo({ navigation }) {
         <Text style={styles.greeting}>Tu saldo: {usuario.saldo?.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })} COP</Text>
         
         {/* Gráfico de barras de saldos acumulados */}
-        {saldosAcumulados.length > 0 && (
-          <BarChart
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: positiveData,
-                },
-                {
-                  data: negativeData,
-                },
-              ]
-            }}
-            width={Dimensions.get('window').width - 40} // Ajusta el ancho del gráfico
-            height={220}
-            yAxisLabel="$"
-            yAxisSuffix=""
-            yAxisInterval={1} // Intervalo de 1, que luego se ajustará en los valores
-            chartConfig={{
-              backgroundColor: "#ffffff",
-              backgroundGradientFrom: "#ffffff",
-              backgroundGradientTo: "#ffffff",
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: () => `rgb(0, 0, 0)`,
-              style: {
-                borderRadius: 16
+        <BarChart
+          data={{
+            labels,
+            datasets: [
+              {
+                data: saldosAcumulados,
               },
-            }}
-            style={{
-              marginVertical: 8,
+            ]
+          }}
+          width={Dimensions.get('window').width - 40} // Ajusta el ancho del gráfico
+          height={220}
+          yAxisLabel="$"
+          yAxisSuffix=""
+          yAxisInterval={1} // Intervalo de 1, que luego se ajustará en los valores
+          chartConfig={{
+            backgroundColor: "#ffffff",
+            backgroundGradientFrom: "#ffffff",
+            backgroundGradientTo: "#ffffff",
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            labelColor: () => `rgb(0, 0, 0)`,
+            style: {
               borderRadius: 16
-            }}
-          />
-        )}
-
-        {/* Lista de transacciones */}
-        {usuario.transacciones && (
-          <FlatList
-            data={usuario.transacciones.reverse()} // Invierte el orden para mostrar las más recientes primero
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-            style={styles.transactionList}
-          />
-        )}
+            },
+          }}
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+        />
+        <View style={styles.transactionContainer}>
+          <View style={styles.transactionHeader}>
+            <Text style={styles.subtitle}>Actividad reciente</Text>
+            <Text style={styles.subtitle2}>Ver todo</Text>
+          </View>
+          {/* Lista de transacciones */}
+          {usuario.transacciones && (
+            <FlatList
+              data={usuario.transacciones.reverse()} // Invierte el orden para mostrar las más recientes primero
+              renderItem={renderItem}
+              keyExtractor={item => item.id.toString()}
+              style={styles.transactionList}
+            />
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -143,13 +147,35 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   dateText: {
-    fontWeight: 'bold',
   },
   amountText: {
     fontWeight: 'bold',
   },
+  transactionContainer: {
+    borderRadius: 10,
+    padding: 15,
+    backgroundColor: '#f3f3f3',
+    width: '100%',
+    flex: 1,
+  },
+  transactionHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
   transactionList: {
     width: '100%',
+  },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: '500',
+    marginBottom: 10,
+  },
+  subtitle2: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 10,
   },
 });
 

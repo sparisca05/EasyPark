@@ -1,5 +1,7 @@
 package com.example.back.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.back.entity.RecargaRequest;
+import com.example.back.entity.Transaccion;
 import com.example.back.entity.Usuario;
 import com.example.back.entity.UsuarioInfo;
 import com.example.back.services.UsuarioService;
@@ -57,6 +60,13 @@ public class UsuarioController {
     public UsuarioInfo consultarSaldo() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return usuarioService.consultarSaldo(username);
+    }
+
+    // Consultar movimientos del usuario autenticado
+    @GetMapping("/movimientos")
+    public List<Transaccion> consultarMovimientos() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return usuarioService.getAllTransacciones(username);
     }
 
 
