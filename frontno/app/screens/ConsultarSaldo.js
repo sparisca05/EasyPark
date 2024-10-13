@@ -7,7 +7,7 @@ import { BarChart } from 'react-native-chart-kit';
 import GlobalStyles from '../config/GlobalStyles';
 import { useApiUrl } from '../config/ApiUrlContext';
 
-function ConsultarSaldo({ navigation }) {
+function ConsultarSaldo() {
   const [usuario, setUsuario] = useState({});
   const apiUrl = useApiUrl();
 

@@ -46,8 +46,9 @@ public class UsuarioController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName(); // Obtener el username del usuario autenticado
         return usuarioService.deleteUser(usuarioService.getUserByUsername(username).getId());
     }
+    
     // Recargar saldo del usuario autenticado
-    @PostMapping("/recargar")
+    @PutMapping("/recargar")
     public String recargarSaldo(@RequestBody RecargaRequest monto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName(); // Obtener el username del usuario autenticado
         Long id = usuarioService.getUserByUsername(username).getId();

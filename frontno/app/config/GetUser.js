@@ -5,8 +5,8 @@ import { Alert } from 'react-native';
 import { useApiUrl } from './ApiUrlContext';
 
 function GetUser () {
-  const [usuario, setUsuario] = useState(null);
-    const apiUrl = useApiUrl();
+  let [usuario, setUsuario] = useState('');
+  let apiUrl = useApiUrl();
 
   useEffect(() => {
     const obtenerUsuario = async () => {
