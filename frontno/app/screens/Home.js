@@ -18,7 +18,7 @@ function Home({ navigation }) {
 
         <View style={styles.gridContainer}>
           <HomeButton text="Consultar saldo" icon={require('../assets/Balance.png')} onPress={() => navigation.navigate("Consultar Saldo")}/>
-          <HomeButton text="Recarga" icon={require('../assets/Reload.png')}/>
+          <HomeButton text="Recarga" icon={require('../assets/Reload.png')}onPress={() => navigation.navigate("Recarga")}/>
           <HomeButton text="Ticket día" icon={require('../assets/ticket.png')} onPress={() => navigation.navigate("Ticket dia")}/>
           <HomeButton text="Registra tu vehículo" icon={require('../assets/Car.png')} onPress={() => navigation.navigate("Registrar Vehiculo")}/>
         </View>

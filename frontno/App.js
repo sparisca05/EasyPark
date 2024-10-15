@@ -11,6 +11,7 @@ import RegistraVehiculo from './app/screens/RegistraVehiculo';
 import ConsultarSaldo from './app/screens/ConsultarSaldo';
 import { ApiUrlProvider } from './app/config/ApiUrlContext';
 import TicketDia from './app/screens/TicketDia';
+import Recarga from './app/screens/Recarga';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
             <Stack.Screen name="Registrar Vehiculo" component={RegistraVehiculo} />
             <Stack.Screen name="Consultar Saldo" component={ConsultarSaldo} />
             <Stack.Screen name="Ticket dia" component={TicketDia} />
+            <Stack.Screen name="Recarga" component={Recarga} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
