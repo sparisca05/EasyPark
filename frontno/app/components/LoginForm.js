@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Alert, Text, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,15 +7,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
 import LoadingComponent from '../config/Loading';
-import { useApiUrl } from '../config/ApiUrlContext';
+import { ApiUrlContext } from '../config/ApiUrlContext';
 
 const LoginForm = ({ navigation }) => {
+    const apiUrl = useContext(ApiUrlContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
     const [loading, setLoading] = useState(false);  // Estado para mostrar una carga
-
-    const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
 
     const handleLogin = async () => {
         const credentials = { username, password };

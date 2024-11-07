@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import GlobalStyles from '../config/GlobalStyles';
-import GetUser from '../config/GetUser';
-import { Recharge } from '../config/Recharge';
 import CustomButton from '../components/CustomButton';
+import { ApiUrlContext, Recharge } from '../config/ApiUrlContext';
 
 function TicketDia({navigation}) {
-    const usuario = GetUser();
+    const usuario = useContext(ApiUrlContext);
 
     const handlePagar = () => {
         Alert.alert('Estás seguro de pagar el ticket día?', 'Se descontará el valor del ticket del día de tu saldo actual.', [

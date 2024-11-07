@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, FlatList, Dimensions, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BarChart } from 'react-native-chart-kit';
 
 import GlobalStyles from '../config/GlobalStyles';
-import { useApiUrl } from '../config/ApiUrlContext';
+import { ApiUrlContext } from '../config/ApiUrlContext';
 
 function ConsultarSaldo() {
   const [usuario, setUsuario] = useState({});
-  const apiUrl = useApiUrl();
+  const apiUrl = useContext(ApiUrlContext);
 
   useEffect(() => {
     const obtenerUsuario = async () => {

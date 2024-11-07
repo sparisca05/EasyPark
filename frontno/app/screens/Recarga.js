@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import RechargeForm from '../components/RechargeForm';
 import GlobalStyles from '../config/GlobalStyles';

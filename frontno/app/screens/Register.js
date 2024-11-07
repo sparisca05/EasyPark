@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, StyleSheet, Alert, Text } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
 import RegisterForm from '../components/RegisterForm';

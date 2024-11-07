@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
-import { Recharge } from '../config/Recharge';  // Importa la función de recarga
+import { Recharge } from '../config/ApiUrlContext';
 import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity, Image } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -24,38 +24,38 @@ const RechargeForm = ({ navigation }) => {
             return;
         }
 
-        // Llamada a la función `Recharge` del archivo `config`
         await Recharge(monto, 'Recarga realizada con éxito', navigation);
     };
 
     return (
-        <View style={styles.container}>
-            {/* Texto centrado */}
+        <>
+            <View style={styles.container}>
+                {/* Texto centrado */}
 
-            <View style={styles.form_container}>
-                <Text style={styles.title}>Importe el monto a recargar</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Ingresa el monto"
-                    value={monto}
-                    onChangeText={setMonto}
-                    keyboardType="numeric"
-                    textAlign='center'
-                />
-                {/* Espacio entre monto y bancos */}
-                <View style={styles.spacer} />
+                <View style={styles.form_container}>
+                    <Text style={styles.title}>Importe el monto a recargar</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Ingresa el monto"
+                        value={monto}
+                        onChangeText={setMonto}
+                        keyboardType="numeric"
+                        textAlign='center'
+                    />
+                    {/* Espacio entre monto y bancos */}
+                    <View style={styles.spacer} />
 
-                {/* Texto de selección de banco alineado a la izquierda */}
+                    {/* Texto de selección de banco alineado a la izquierda */}
 
-                <Text style={styles.subtitle}>Selecciona un banco</Text>
-                <RNPickerSelect
-                    onValueChange={(value) => setBanco(value)}
-                    items={bancos}
-                    style={pickerSelectStyles}
-                />
-                
-            </View>
-            <View style={styles.termsContainer}>
+                    <Text style={styles.subtitle}>Selecciona un banco</Text>
+                    <RNPickerSelect
+                        onValueChange={(value) => setBanco(value)}
+                        items={bancos}
+                        style={pickerSelectStyles}
+                    />
+                    
+                </View>
+                <View style={styles.termsContainer}>
                     <Image
                         source={require('../assets/shield.png')} // Asegúrate de que la imagen esté en esta ruta
                         style={styles.icon}
@@ -64,8 +64,9 @@ const RechargeForm = ({ navigation }) => {
                         Transacción segura bajo nuestros Términos y Condiciones
                     </Text>
                 </View>
+            </View>
             <CustomButton title="Pagar" onPress={handleRecharge} />
-        </View>
+        </>
     );
 };
 

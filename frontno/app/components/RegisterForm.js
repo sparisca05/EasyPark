@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
-import { useApiUrl } from '../config/ApiUrlContext';
+import { ApiUrlContext } from '../config/ApiUrlContext';
 
 const RegisterForm = ({navigation}) => {
     const [username, setUsername] = useState('');
@@ -13,7 +13,7 @@ const RegisterForm = ({navigation}) => {
     const [apellido, setApellido] = useState('');
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
-    const apiUrl = useApiUrl();
+    const apiUrl = useContext(ApiUrlContext);
 
     const validarEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,11 +31,11 @@ const RegisterForm = ({navigation}) => {
             Alert.alert('Error', 'Por favor, introduce un correo electrónico válido.');
             return;
         }
-       /*
+       
         if (password.length < 6) {
             Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres.');
             return;
-        }*/
+        }
 
             const userData = {
                 username,

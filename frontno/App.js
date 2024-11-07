@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Welcome from './app/screens/Welcome';
 import Login from './app/screens/Login';
@@ -16,7 +16,6 @@ import Recarga from './app/screens/Recarga';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
   return (
     <ApiUrlProvider>
       <SafeAreaProvider>

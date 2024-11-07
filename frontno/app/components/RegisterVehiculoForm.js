@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, TextInput, StyleSheet, Alert, Text } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';  // Importa el nuevo picker
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from './CustomButton';
-import { useApiUrl } from '../config/ApiUrlContext';
+import { ApiUrlContext } from '../config/ApiUrlContext';
+
 
 const RegisterVehiculoForm = ({navigation}) => {
     // Estado para almacenar los datos introducidos por el usuario
@@ -36,7 +38,7 @@ const RegisterVehiculoForm = ({navigation}) => {
         { label: 'Moto', value: 'moto' }
     ];
 
-    const apiUrl = useApiUrl(); // Obtiene el valor de API_URL
+    const apiUrl = useContext(ApiUrlContext);
     const url = `${apiUrl}/api/v1/registra-vehiculo`;
 
     // Función para manejar el registro del vehículo

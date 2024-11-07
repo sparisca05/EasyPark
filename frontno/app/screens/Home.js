@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
 import HomeButton from '../components/HomeButton';
 import LogoutButton from '../components/LogoutButton';
-import GetUser from '../config/GetUser';
+import { GetUser } from '../config/ApiUrlContext';
 
 function Home({ navigation }) {
   const usuario = GetUser();

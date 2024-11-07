@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Image, StyleSheet, StatusBar, Platform } from 'react-native';
+import { SafeAreaView, View, Text, Image, StyleSheet, StatusBar } from 'react-native';
 
 import GlobalStyles from '../config/GlobalStyles';
 import CustomButton from '../components/CustomButton';
