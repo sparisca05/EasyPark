@@ -17,4 +17,13 @@ function Recarga({ navigation }) {
     );
 }
 
+const styles = StyleSheet.create({
+    logo: {
+      margin: 20,
+      width: 20,
+      height: 10,
+      resizeMode: 'contain',
+      transform: [{ scale: 0.7 }],
+    }
+  });
 export default Recarga;

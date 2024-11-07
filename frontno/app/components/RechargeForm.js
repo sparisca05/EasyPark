@@ -125,6 +125,11 @@ const styles = StyleSheet.create({
         color: '#777',
         
     },
+    QR: {
+        width: 250,
+        height: 250,
+        margin: 10, // Espacio entre el ícono y el texto
+    },
 });
 
 
