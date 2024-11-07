@@ -43,7 +43,7 @@ const RechargeForm = ({ navigation }) => {
                     textAlign='center'
                 />
                 {/* Espacio entre monto y bancos */}
-                <View style={styles.spacer} />
+                <Image source={require('../assets/QR.jpeg')} style={styles.QR}/>
 
                 {/* Texto de selección de banco alineado a la izquierda */}
 
@@ -123,6 +123,11 @@ const styles = StyleSheet.create({
         fontSize: 12, // Texto más pequeño para los términos
         color: '#777',
         
+    },
+    QR: {
+        width: 250,
+        height: 250,
+        margin: 10, // Espacio entre el ícono y el texto
     },
 });
 

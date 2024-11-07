@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, SafeAreaView, View } from 'react-native';
+import { Text,StyleSheet, SafeAreaView, View , Image} from 'react-native';
 
 import RechargeForm from '../components/RechargeForm';
 import GlobalStyles from '../config/GlobalStyles';
@@ -17,4 +17,13 @@ function Recarga({ navigation }) {
     );
 }
 
+const styles = StyleSheet.create({
+    logo: {
+      margin: 20,
+      width: 20,
+      height: 10,
+      resizeMode: 'contain',
+      transform: [{ scale: 0.7 }],
+    }
+  });
 export default Recarga;
